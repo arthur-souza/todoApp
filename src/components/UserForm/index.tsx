@@ -4,56 +4,47 @@ import { observer } from "mobx-react"
 
 // Meterial-UI
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 
 const s = require("./style.scss");
 
-export interface ITaskFields {
+export interface IUserFields {
 	name: string;
-	user: string;
+	email: string;
 }
 
 interface IProps {
-	onSubmit: (fields: ITaskFields) => void;
-	UsersOptions: {
-		name: string;
-		id: string;
-	}[];
+	onSubmit: (fields: IUserFields) => void;
 }
 
 @observer
-export class TaskForm extends React.Component<IProps, {}> {
+export class UserForm extends React.Component<IProps, {}> {
 	@observable name: string = "";
-	@observable user: string = "";
+	@observable email: string = "";
 
 	@action
 	changeName = (name: string) => this.name = name;
 
 	@action
-	changeUser = (user: string) => this.user = user;
+	changeEmail = (email: string) => this.email = email;
 
 	handleSubmit = (e: any) => {
 		e.preventDefault();
 
 		this.props.onSubmit({
 			name: this.name,
-			user: this.user,
+			email: this.email,
 		});
 
-		this.changeUser("");
 		this.changeName("");
+		this.changeEmail("");
 	}
 
 	render() {
 		return (
 			<Card className={s.card}>
-				<div className={s.title}>Adicionar nova tarefa</div>
+				<div className={s.title}>Adicionar novo usuário</div>
 				<form onSubmit={this.handleSubmit} className={s.form}>
 					<div className={s.inputGroup}>
 						<TextField
@@ -64,20 +55,15 @@ export class TaskForm extends React.Component<IProps, {}> {
 							required
 						/>
 					</div>
-
 					<div className={s.inputGroup}>
-						<FormControl className={s.select}>
-							<InputLabel htmlFor="user">Usuário</InputLabel>
-							<Select
-								value={this.user}
-								onChange={(e) => this.changeUser(e.target.value)}
-								input={<Input name="user" id="user" />}
-							>
-								{this.props.UsersOptions.map((user, index) => (
-									<MenuItem value={user.id} key={index}>{user.name}</MenuItem>
-								))}
-							</Select>
-						</FormControl>
+						<TextField
+							type="email"
+							value={this.email}
+							onChange={(e) => this.changeEmail(e.target.value)}
+							label="E-mail"
+							name="email"
+							required
+						/>
 					</div>
 
 					<Button variant="raised" size="medium" color="primary" type="submit">

@@ -1,0 +1,32 @@
+.taskList {
+	margin-top: 32px;
+}
+
+.tasksInfo {
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	margin: 50px 0;
+}
+
+.taskInfo {
+	display: inline-flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 24px;
+	margin-right: 24px;
+	text-align: center;
+	width: 150px;
+
+	&_value {
+		font-size: 32px;
+		font-weight: bold;
+		color: #f50057;
+		margin-bottom: 8px;
+	}
+
+	&_name {
+		font-size: 18px;
+		color: #545454;
+	}
+}

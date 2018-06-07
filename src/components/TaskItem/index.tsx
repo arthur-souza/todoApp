@@ -10,7 +10,7 @@ const s = require("./style.scss");
 
 interface IProps {
 	name: string;
-	category: string;
+	user: string;
 	done: boolean;
 	id: string;
 	handleToggle: (taskId: string) => void;
@@ -26,7 +26,7 @@ export class TaskItem extends React.Component<IProps, {}> {
 						<div className={s.title}>
 							<span className={s.title_name}>{this.props.name}</span>
 							<span className={s.title_separator}>-</span>
-							<span className={s.title_category}>{this.props.category}</span>
+							<span className={s.title_user}>{this.props.user}</span>
 						</div>
 					}
 				/>

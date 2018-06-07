@@ -6,7 +6,7 @@ interface ITask {
 	id: string;
 	name: string,
 	done: boolean,
-	categoryId: string;
+	responsible: string;
 }
 
 type ISetupTask = ObjectOmit<ITask, "id">
@@ -36,8 +36,8 @@ export class TasksStore {
 		);
 	}
 
-	getTasksByCategory = (categoryId: string) => {
-		return this.tasks.filter(task => task.categoryId === categoryId);
+	getTasksByResponsible = (responsible: string) => {
+		return this.tasks.filter(task => task.responsible === responsible);
 	}
 
 	@computed

@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Tasks from "../Tasks";
-import Categories from "../Categories";
+import Users from "../Users";
 import "normalize.css";
 
 const s = require("./style.scss");
@@ -34,13 +34,13 @@ export class App extends React.Component<IProps, {}> {
 						centered
 					>
 						<Tab label="Tarefas" />
-						<Tab label="Categorias" />
+						<Tab label="Pessoas" />
 					</Tabs>
 				</header>
 
 				<div className={s.content}>
 					{currentTab === 0 && <Tasks />}
-					{currentTab === 1 && <Categories />}
+					{currentTab === 1 && <Users />}
 				</div>
 			</div>
 		)

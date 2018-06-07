@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer, inject } from "mobx-react";
 import List from "@material-ui/core/List";
-import { TasksStore } from "../../stores";
+import { TasksStore, UsersStore } from "../../stores";
 import { TaskForm, ITaskFields } from "../../components/TaskForm";
 import { TaskItem } from "../../components/TaskItem";
 import Card from "@material-ui/core/Card";
@@ -10,15 +10,16 @@ const s = require("./style.scss");
 
 interface IProps {
 	tasksStore?: TasksStore;
+	usersStore?: UsersStore;
 }
 
-@inject("tasksStore")
+@inject("tasksStore", "usersStore")
 @observer
 export class Tasks extends React.Component<IProps, {}> {
 	addNewTask = (values: ITaskFields) => {
 		this.props.tasksStore!.add({
 			name: values.name,
-			categoryId: values.category,
+			responsible: values.user,
 			done: false,
 		})
 	}
@@ -31,13 +32,21 @@ export class Tasks extends React.Component<IProps, {}> {
 		this.props.tasksStore!.toggleDone(taskId);
 	}
 
+	getUserName = (userId: string) => {
+		const user = this.props.usersStore!.getUser(userId);
+
+		return user ? user.name : null;
+	}
+
 	render() {
 		return (
 			<div className={s.container}>
 				<TaskForm
 					onSubmit={this.addNewTask}
-					categoryOptions={[{label: "kj", value: "b"}]}
-					defaultCategory="b"
+					UsersOptions={this.props.usersStore!.users.map(user => ({
+						name: user.name,
+						id: user.id,
+					}))}
 				/>
 
 				<div className={s.tasksInfo}>
@@ -57,7 +66,7 @@ export class Tasks extends React.Component<IProps, {}> {
 							<TaskItem
 								key={index}
 								name={task.name}
-								category={task.categoryId}
+								user={this.getUserName(task.responsible) || ""}
 								done={task.done}
 								id={task.id}
 								handleToggle={this.toggleDone}
